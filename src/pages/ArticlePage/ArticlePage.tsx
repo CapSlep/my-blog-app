@@ -5,6 +5,7 @@ import axios from "axios";
 import { CommentsList, AddCommentForm } from "../../components";
 import { Button } from "react-bootstrap";
 import "./ArticlePage.scss";
+import { useUser } from "../../hooks";
 
 function ArticlePage() {
   const { name } = useParams();
@@ -12,18 +13,31 @@ function ArticlePage() {
     useLoaderData();
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [comments, setComments] = useState(initialComments);
+  const { isLoading, user } = useUser();
 
   async function upvoteClicked() {
-    const response = await axios.post("/api/articles/" + name + "/upvote");
+    const token = user && (await user.getIdToken());
+    const headers = token ? { authtoken: token } : {};
+    const response = await axios.post(
+      "/api/articles/" + name + "/upvote",
+      null,
+      { headers }
+    );
     const updatedArticleData = response.data;
     setUpvotes(updatedArticleData.upvotes);
   }
 
   async function addComment(nameText: string, commentText: string) {
-    const response = await axios.post("/api/articles/" + name + "/comments", {
-      postedBy: nameText,
-      text: commentText,
-    });
+    const token = user && (await user.getIdToken());
+    const headers = token ? { authtoken: token } : {};
+    const response = await axios.post(
+      "/api/articles/" + name + "/comments",
+      {
+        postedBy: nameText,
+        text: commentText,
+      },
+      { headers }
+    );
     const updatedArticleData = response.data;
     setComments(updatedArticleData.comments);
   }
@@ -38,9 +52,11 @@ function ArticlePage() {
     <>
       <h1>{article.title}</h1>
       <div className="upvote__container">
-        <Button className="upvote__button" onClick={upvoteClicked}>
-          Upvote
-        </Button>
+        {user && (
+          <Button className="upvote__button" onClick={upvoteClicked}>
+            Upvote
+          </Button>
+        )}
         <p className="upvote__text">
           This article has <span>{upvotes}</span> upvotes!
         </p>
@@ -48,7 +64,12 @@ function ArticlePage() {
       {article.content.map((p) => (
         <p key={p}>{p}</p>
       ))}
-      <AddCommentForm onAddComment={addComment}></AddCommentForm>
+      {user ? (
+        <AddCommentForm onAddComment={addComment}></AddCommentForm>
+      ) : (
+        <p>Log In to add a comment</p>
+      )}
+
       <CommentsList comments={comments}></CommentsList>
     </>
   );
