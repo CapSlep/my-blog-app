@@ -70,7 +70,7 @@ app.post("/api/articles/:name/upvote", async (req, res) => {
     );
     res.json(updatedArticle);
   } else {
-    res.sendStatus(403);
+    res.status(403).send("Can't upvote this article again");
   }
 });
 

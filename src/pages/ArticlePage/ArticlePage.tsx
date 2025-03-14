@@ -18,13 +18,17 @@ function ArticlePage() {
   async function upvoteClicked() {
     const token = user && (await user.getIdToken());
     const headers = token ? { authtoken: token } : {};
-    const response = await axios.post(
-      "/api/articles/" + name + "/upvote",
-      null,
-      { headers }
-    );
-    const updatedArticleData = response.data;
-    setUpvotes(updatedArticleData.upvotes);
+    try {
+      const response = await axios.post(
+        "/api/articles/" + name + "/upvote",
+        null,
+        { headers }
+      );
+      const updatedArticleData = response.data;
+      setUpvotes(updatedArticleData.upvotes);
+    } catch (error: any) {
+      console.warn(error);
+    }
   }
 
   async function addComment(nameText: string, commentText: string) {
