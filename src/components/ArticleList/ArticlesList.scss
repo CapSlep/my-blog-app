@@ -1,0 +1,13 @@
+.article__list-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+
+.article__card {
+  max-width: 25%;
+  min-width: 220px;
+}
