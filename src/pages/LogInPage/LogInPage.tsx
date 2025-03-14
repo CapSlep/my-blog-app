@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./LogInPage.scss";
 
+//Page for login into the account with firebase
 function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,12 +12,13 @@ function LogInPage() {
 
   const navigate = useNavigate();
 
+  //function to login with firebase
   async function login() {
     try {
-      await signInWithEmailAndPassword(getAuth(), email, password);
-      navigate("/articles");
+      await signInWithEmailAndPassword(getAuth(), email, password); // firebase function for login in
+      navigate("/articles"); // transfer to other page after login in
     } catch (error: any) {
-      setError(error.message);
+      setError(error); // catching error if login in went wrong
     }
   }
 

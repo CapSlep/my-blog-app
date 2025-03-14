@@ -8,8 +8,8 @@ import { Button } from "react-bootstrap";
 import { useUser } from "../../hooks";
 
 function NavBar() {
-  const navigate = useNavigate();
-  const { isLoading, user } = useUser();
+  const navigate = useNavigate(); //setting navigate function to navigate to other pages by event
+  const { isLoading, user } = useUser(); //getting variables from useUser hook to display user info
 
   return (
     <Navbar sticky="top" expand={true} className="navbar__holder">

@@ -18,19 +18,21 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
+//Routes to navigate through pages with react-router-dom
 const routes: RouteObject[] = [
   {
-    path: "/",
-    element: <Layout />,
-    errorElement: <PageError />,
+    path: "/", // path of home page
+    element: <Layout />, // Layout element that contain still components and page that will be displayed
+    errorElement: <PageError />, //error element if no pages was found
     children: [
+      // pages that can be displayed and their paths
       { path: "/", element: <HomePage /> },
       { path: "/about", element: <AboutPage /> },
       { path: "/articles", element: <ArticlesPage /> },
       {
-        path: "/articles/:name",
+        path: "/articles/:name", // special path to travel across many articles
         element: <ArticlePage />,
-        loader: articleLoader,
+        loader: articleLoader, // function that will be invoked on transition
       },
       {
         path: "/login",
@@ -44,6 +46,7 @@ const routes: RouteObject[] = [
   },
 ];
 
+//router that responsible for routing through pages
 const router = createBrowserRouter(routes);
 
 function App() {

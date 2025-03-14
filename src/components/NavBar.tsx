@@ -11,6 +11,7 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
+            {/* Links in nav are rendered with bootstrup component but behave as Link component from react-router-dom and lead to desired pages */}
             <Nav.Link as={Link} to={"/"}>
               Home
             </Nav.Link>

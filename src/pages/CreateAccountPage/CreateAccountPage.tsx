@@ -4,25 +4,28 @@ import { Link, useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import "./CreateAccountPage.scss";
 
+// Page for creating of an account with firebase
 function CreateAccountPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState(""); // error that will show what went wrong during registration
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // function that uses useNavigate hook from react-router-dom to
 
+  //function to register with firebase method and then navigate to articles page
   async function register() {
+    // Checking if both passwords are the same
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
 
     try {
-      await createUserWithEmailAndPassword(getAuth(), email, password);
-      navigate("/articles");
+      await createUserWithEmailAndPassword(getAuth(), email, password); // creation of account in firebase
+      navigate("/articles"); // navigate to articles after registration
     } catch (error: any) {
-      setError(error.message);
+      setError(error); // catching error if something went wrong
     }
   }
 
