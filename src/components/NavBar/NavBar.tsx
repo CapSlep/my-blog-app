@@ -34,7 +34,7 @@ function NavBar() {
           </Nav>
         </Navbar.Collapse>
 
-        <Navbar.Collapse className="justify-content-end gap-0 column-gap-3">
+        <Navbar.Collapse className="justify-content-end gap-0 column-gap-2">
           {isLoading ? (
             <Navbar.Text>Loading...</Navbar.Text>
           ) : (

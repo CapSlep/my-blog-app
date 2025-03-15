@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useParams, useLoaderData } from "react-router-dom";
-import articles from "../../article-content";
 import axios from "axios";
 import { CommentsList, AddCommentForm } from "../../components";
 import { Button } from "react-bootstrap";
@@ -9,8 +8,12 @@ import { useUser } from "../../hooks";
 
 function ArticlePage() {
   const { name } = useParams(); //get the article name from parameters of the link in router
-  const { upvotes: initialUpvotes, comments: initialComments } =
-    useLoaderData(); //get the data from loader of component
+  const {
+    upvotes: initialUpvotes,
+    comments: initialComments,
+    title,
+    content,
+  } = useLoaderData(); //get the data from loader of component
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [comments, setComments] = useState(initialComments);
   const { user } = useUser(); //getting user from useUser hook
@@ -49,16 +52,9 @@ function ArticlePage() {
     setComments(updatedArticleData.comments); //update state of comments for displaying in ui
   }
 
-  const article = articles.find((a) => a.name === name); //find current article from document that contains all articles
-
-  //if article is non existant throw error that will trigger 404 page to show up
-  if (!article) {
-    throw new Error("No such article");
-  }
-
   return (
     <>
-      <h1>{article.title}</h1>
+      <h1>{title}</h1>
       <div className="upvote__container">
         {user && (
           <Button className="upvote__button" onClick={upvoteClicked}>
@@ -69,8 +65,8 @@ function ArticlePage() {
           This article has <span>{upvotes}</span> upvotes!
         </p>
       </div>
-      {article.content.map((p) => (
-        <p key={p}>{p}</p>
+      {content.map((c: string) => (
+        <p key={c}>{c}</p>
       ))}
       {user ? (
         <AddCommentForm onAddComment={addComment}></AddCommentForm>
@@ -86,8 +82,8 @@ function ArticlePage() {
 //loader function that will be exported to run as soon as component rendered
 export async function loader({ params }: any) {
   const response = await axios.get("/api/articles/" + params.name); //get article for current article name and get response with article data
-  const { upvotes, comments } = response.data; //get upvotes and comments data from response
-  return { upvotes, comments }; //return upvotes and comments data to use inside component
+  const { upvotes, comments, title, content } = response.data; //get upvotes and comments data from response
+  return { upvotes, comments, title, content }; //return upvotes and comments data to use inside component
 }
 
 export default ArticlePage;
