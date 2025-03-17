@@ -14,7 +14,8 @@ function AddCommentForm({ onAddComment }: props) {
 
   return (
     <Form
-      className="add__comment-container"
+      // className="add__comment-container"
+      className="alert alert-dark"
       onSubmit={(e) => {
         e.preventDefault();
         onAddComment(nameText, commentText);
@@ -22,8 +23,8 @@ function AddCommentForm({ onAddComment }: props) {
         setCommentText("");
       }}
     >
-      <h3 className="add__comment-title">Add your Comment</h3>
-      <Form.Group className="add__comment-label">
+      <h3 className="add__comment-title p-2">Add your Comment</h3>
+      <Form.Group className="add__comment-label p-2">
         <Form.Label className="label__title">Name:</Form.Label>
         <Form.Control
           className="input__area"
@@ -34,7 +35,7 @@ function AddCommentForm({ onAddComment }: props) {
           }}
         />
       </Form.Group>
-      <Form.Group className="add__comment-label">
+      <Form.Group className="add__comment-label p-2">
         <FloatingLabel label="Text" className="add__comment-text__floating">
           <Form.Control
             as="textarea"
@@ -48,7 +49,9 @@ function AddCommentForm({ onAddComment }: props) {
         </FloatingLabel>
       </Form.Group>
 
-      <Button className="add__comment-button">Add Comment</Button>
+      <Button className="add__comment-button m-2" type="submit">
+        Add Comment
+      </Button>
     </Form>
   );
 }

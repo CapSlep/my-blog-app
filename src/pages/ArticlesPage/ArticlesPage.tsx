@@ -1,12 +1,21 @@
 import React from "react";
 import ArticlesList from "../../components/ArticleList/ArticlesList";
-import articles from "../../article-content";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 function ArticlesPage() {
+  // const { isLoading, data: articles } = useFetch("/api/articles");
+  const { data, isLoading } = useQuery({
+    queryKey: ["articles"],
+    queryFn: async () => {
+      return await axios.get("/api/articles");
+    },
+  });
+
   return (
     <>
       <h1>Articles</h1>
-      <ArticlesList articles={articles}></ArticlesList>
+      <ArticlesList articles={data?.data} isLoading={isLoading}></ArticlesList>
     </>
   );
 }

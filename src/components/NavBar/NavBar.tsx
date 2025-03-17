@@ -1,18 +1,22 @@
 import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
-import "./NavBar.scss";
-import { Button } from "react-bootstrap";
+import { Button, Spinner, Nav, Navbar } from "react-bootstrap";
 import { useUser } from "../../hooks";
+import "./NavBar.scss";
 
 function NavBar() {
   const navigate = useNavigate(); //setting navigate function to navigate to other pages by event
   const { isLoading, user } = useUser(); //getting variables from useUser hook to display user info
 
   return (
-    <Navbar sticky="top" expand={true} className="navbar__holder">
+    <Navbar
+      sticky="top"
+      expand="md"
+      className="rounded-bottom"
+      bg="secondary-subtle"
+      data-bs-theme="secondary-subtle"
+    >
       <Container fluid className="navbar__container">
         <Navbar.Brand as={Link} to={"/"}>
           My Blog
@@ -34,14 +38,17 @@ function NavBar() {
           </Nav>
         </Navbar.Collapse>
 
-        <Navbar.Collapse className="justify-content-end gap-0 column-gap-2">
+        <Navbar.Collapse className="justify-content-end ">
           {isLoading ? (
-            <Navbar.Text>Loading...</Navbar.Text>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
           ) : (
             <>
               {user && <Navbar.Text>Signed in as: {user.email}</Navbar.Text>}
               {user ? (
                 <Button
+                  className="ms-2"
                   variant="secondary"
                   onClick={(e) => {
                     e.stopPropagation();

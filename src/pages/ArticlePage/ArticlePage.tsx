@@ -8,12 +8,14 @@ import { useUser } from "../../hooks";
 
 function ArticlePage() {
   const { name } = useParams(); //get the article name from parameters of the link in router
+
   const {
     upvotes: initialUpvotes,
     comments: initialComments,
     title,
     content,
   } = useLoaderData(); //get the data from loader of component
+
   const [upvotes, setUpvotes] = useState(initialUpvotes);
   const [comments, setComments] = useState(initialComments);
   const { user } = useUser(); //getting user from useUser hook
@@ -82,7 +84,7 @@ function ArticlePage() {
 //loader function that will be exported to run as soon as component rendered
 export async function loader({ params }: any) {
   const response = await axios.get("/api/articles/" + params.name); //get article for current article name and get response with article data
-  const { upvotes, comments, title, content } = response.data; //get upvotes and comments data from response
+  const { upvotes, comments, title, content } = response?.data; //get upvotes and comments data from response
   return { upvotes, comments, title, content }; //return upvotes and comments data to use inside component
 }
 

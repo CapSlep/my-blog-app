@@ -45,6 +45,11 @@ app.get("/api/articles/:name", async (req, res) => {
   res.json(article); // responding with JSON containing desired article
 });
 
+app.get("/api/articles", async (req, res) => {
+  const articles = await db.collection("articles").find({}).toArray();
+  res.json(articles);
+});
+
 //middlware to get the current user
 app.use(async function (req, res, next) {
   const { authtoken } = req.headers; // authorisation token of user from request headers
@@ -80,7 +85,15 @@ app.post("/api/articles/:name/upvote", async (req, res) => {
     );
     res.json(updatedArticle);
   } else {
-    res.status(403).send("Can't upvote this article again"); // return response with Forbidden error if user already upvotet article
+    const updatedArticle = await db.collection("articles").findOneAndUpdate(
+      { name }, //name of the article
+      { $inc: { upvotes: -1 }, $pull: { upvoteIds: uid } }, // increment the upvote number and push user uid to the array with users that upvoted
+      {
+        returnDocument: "after", //return document after the updates
+      }
+    );
+    res.json(updatedArticle);
+    // res.status(403).send("Can't upvote this article again"); // return response with Forbidden error if user already upvotet article
   }
 });
 

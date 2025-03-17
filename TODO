@@ -1,0 +1,28 @@
+- Features
+
+* passwords and mails validation
+* populate home page
+* populate about page
+* add more articles
+* let users delete their comments
+* let users upvote comments
+* sort comments by time or by upvotes
+* sort articles by time
+
+- Admin Config
+
+* make admin configuration
+* let admin delete comments
+* let admin redact articles
+
+- Fixes
+
+* Error screen
+* make removing upvote faster
+
+- Complete
+
+* make articles download from DB to articles list
+* let user remove their upvote
+* skeleton loader
+* downloading data and caching it
