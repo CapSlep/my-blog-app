@@ -68,7 +68,9 @@ function ArticlePage() {
         </p>
       </div>
       {content.map((c: string) => (
-        <p key={c}>{c}</p>
+        <p key={c} className="mb-4">
+          {c}
+        </p>
       ))}
       {user ? (
         <AddCommentForm onAddComment={addComment}></AddCommentForm>

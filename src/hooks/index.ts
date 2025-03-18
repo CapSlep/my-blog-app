@@ -1,7 +1,4 @@
 import useUser from "./useUser";
-// import useFetch from "./useFetch";
+import useFetch from "./useFetch";
 
-export {
-  useUser,
-  // , useFetch
-};
+export { useUser, useFetch };

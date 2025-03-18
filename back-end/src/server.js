@@ -45,6 +45,7 @@ app.get("/api/articles/:name", async (req, res) => {
   res.json(article); // responding with JSON containing desired article
 });
 
+//getting all the articles
 app.get("/api/articles", async (req, res) => {
   const articles = await db.collection("articles").find({}).toArray();
   res.json(articles);
@@ -64,36 +65,42 @@ app.use(async function (req, res, next) {
   }
 });
 
-//endpoint to upvote especial article
+// Function to update the article
+async function updateArticle(name, update, res) {
+  const updatedArticle = await db.collection("articles").findOneAndUpdate(
+    { name }, // name of the article
+    update, // update operation
+    {
+      returnDocument: "after", // return document after the updates
+    }
+  );
+  res.json(updatedArticle);
+}
+
+// endpoint to upvote especial article
 app.post("/api/articles/:name/upvote", async (req, res) => {
-  const { name } = req.params; //get the desired article from req.params
-  const { uid } = req.user; // get user uid from req.user wich was set inside app.use
+  const { name } = req.params; // get the desired article from req.params
+  const { uid } = req.user; // get user uid from req.user which was set inside app.use
 
-  const article = await db.collection("articles").findOne({ name }); //search article in DB
+  const article = await db.collection("articles").findOne({ name }); // search article in DB
 
-  const upvoteIds = article.upvoteIds || []; //get all the users that upvoted article or create new array for future users
+  const upvoteIds = article.upvoteIds || []; // get all the users that upvoted article or create new array for future users
   const canUpvote = uid && !upvoteIds.includes(uid); // check if this user already upvoted this article or not
 
-  //if user can upvote article than make changes in DB
+  // if user can upvote article then make changes in DB
   if (canUpvote) {
-    const updatedArticle = await db.collection("articles").findOneAndUpdate(
-      { name }, //name of the article
-      { $inc: { upvotes: 1 }, $push: { upvoteIds: uid } }, // increment the upvote number and push user uid to the array with users that upvoted
-      {
-        returnDocument: "after", //return document after the updates
-      }
+    await updateArticle(
+      name,
+      { $inc: { upvotes: 1 }, $push: { upvoteIds: uid } },
+      res
     );
-    res.json(updatedArticle);
   } else {
-    const updatedArticle = await db.collection("articles").findOneAndUpdate(
-      { name }, //name of the article
-      { $inc: { upvotes: -1 }, $pull: { upvoteIds: uid } }, // increment the upvote number and push user uid to the array with users that upvoted
-      {
-        returnDocument: "after", //return document after the updates
-      }
+    await updateArticle(
+      name,
+      { $inc: { upvotes: -1 }, $pull: { upvoteIds: uid } },
+      res
     );
-    res.json(updatedArticle);
-    // res.status(403).send("Can't upvote this article again"); // return response with Forbidden error if user already upvotet article
+    // res.status(403).send("Can't upvote this article again"); // return response with Forbidden error if user already upvoted article
   }
 });
 

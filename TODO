@@ -17,12 +17,11 @@
 
 - Fixes
 
-* Error screen
-* make removing upvote faster
+* make upvoting faster
 
 - Complete
 
 * make articles download from DB to articles list
 * let user remove their upvote
 * skeleton loader
-* downloading data and caching it
+* downloading articles data and caching it
