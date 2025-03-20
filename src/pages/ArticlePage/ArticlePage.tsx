@@ -1,24 +1,34 @@
-import React, { useState } from "react";
-import { useParams, useLoaderData } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { CommentsList, AddCommentForm } from "../../components";
-import { Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
+import { CommentsList, AddCommentForm, ErrorContainer } from "../../components";
+import { useUser, useFetch } from "../../hooks";
+import { Placeholder, Spinner, ToggleButton } from "react-bootstrap";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { v4 as uuidv4 } from "uuid"; // import uuid for generating unique ids
 import "./ArticlePage.scss";
-import { useUser } from "../../hooks";
 
 function ArticlePage() {
   const { name } = useParams(); //get the article name from parameters of the link in router
+  const { response, isLoading } = useFetch(
+    name ? name : "",
+    "/api/articles/" + name,
+    Boolean(name)
+  );
 
-  const {
-    upvotes: initialUpvotes,
-    comments: initialComments,
-    title,
-    content,
-  } = useLoaderData(); //get the data from loader of component
-
-  const [upvotes, setUpvotes] = useState(initialUpvotes);
-  const [comments, setComments] = useState(initialComments);
   const { user } = useUser(); //getting user from useUser hook
+  const [upvotes, setUpvotes] = useState(response?.data.upvotes);
+  const [comments, setComments] = useState(response?.data.comments);
+  const [checked, setChecked] = useState(false);
+
+  useEffect(() => {
+    if (!isLoading && response) {
+      setUpvotes(response.data.upvotes);
+      setComments(response.data.comments);
+      setChecked(response.data.upvoteIds.includes(user?.uid));
+    }
+  }, [isLoading, response, user]);
 
   //handle the upvotes Click
   async function upvoteClicked() {
@@ -32,6 +42,7 @@ function ArticlePage() {
       ); // send post request for upvoting current article with user token as headers and get response
       const updatedArticleData = response.data; //get article data after making upvote
       setUpvotes(updatedArticleData.upvotes); //update state of upvotes for displaying in ui
+      setChecked(response.data.upvoteIds.includes(user?.uid));
     } catch (error: any) {
       console.warn(error); //if user already upvoted or any other unexpected error rised during request make a warning error
     }
@@ -45,6 +56,7 @@ function ArticlePage() {
     const response = await axios.post(
       "/api/articles/" + name + "/comments",
       {
+        id: uuidv4(), // generate a unique id for the comment
         postedBy: nameText,
         text: commentText,
       },
@@ -52,42 +64,75 @@ function ArticlePage() {
     ); // send post request for adding comments for current article with user token as headers and get response
     const updatedArticleData = response.data; //get article data after adding comment
     setComments(updatedArticleData.comments); //update state of comments for displaying in ui
+    // send post request for adding comments for current article with user token as headers and get response
   }
 
   return (
     <>
-      <h1>{title}</h1>
-      <div className="upvote__container">
-        {user && (
-          <Button className="upvote__button" onClick={upvoteClicked}>
-            Upvote
-          </Button>
-        )}
-        <p className="upvote__text">
-          This article has <span>{upvotes}</span> upvotes!
-        </p>
-      </div>
-      {content.map((c: string) => (
-        <p key={c} className="mb-4">
-          {c}
-        </p>
-      ))}
-      {user ? (
-        <AddCommentForm onAddComment={addComment}></AddCommentForm>
-      ) : (
-        <p>Log In to add a comment</p>
-      )}
+      <ErrorContainer></ErrorContainer>
+      {isLoading ? (
+        <>
+          <Placeholder as="h1" animation="glow">
+            <Placeholder xs={4} />
+          </Placeholder>
 
-      <CommentsList comments={comments}></CommentsList>
+          <Placeholder.Button xs={2} animation="glow">
+            <Spinner
+              as="span"
+              animation="grow"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+            <span className=" ms-2">Loading...</span>
+          </Placeholder.Button>
+
+          {[...Array(2)].map((_, index) => (
+            <Placeholder key={index} as="p" className="mt-3" animation="glow">
+              <Placeholder xs={12} size="sm" />
+              <Placeholder xs={12} size="sm" />
+              <Placeholder xs={12} size="sm" />
+              <Placeholder xs={8} size="sm" />
+            </Placeholder>
+          ))}
+        </>
+      ) : (
+        <>
+          <h1>{response?.data.title}</h1>
+          <div className="upvote__container">
+            {user && (
+              <ToggleButton
+                className="mb-2 upvote__button"
+                id="toggle-check"
+                type="checkbox"
+                variant="outline-success"
+                checked={checked}
+                value="1"
+                onClick={upvoteClicked}
+              >
+                <FontAwesomeIcon icon={faHeart} />
+              </ToggleButton>
+            )}
+            <p className="upvote__text">
+              This article has <span>{upvotes}</span> upvotes!
+            </p>
+          </div>
+          {response?.data.content.map((c: string) => (
+            <p key={c} className="mb-4">
+              {c}
+            </p>
+          ))}
+          {user ? (
+            <AddCommentForm onAddComment={addComment}></AddCommentForm>
+          ) : (
+            <p>Log In to add a comment</p>
+          )}
+
+          <CommentsList comments={comments}></CommentsList>
+        </>
+      )}
     </>
   );
-}
-
-//loader function that will be exported to run as soon as component rendered
-export async function loader({ params }: any) {
-  const response = await axios.get("/api/articles/" + params.name); //get article for current article name and get response with article data
-  const { upvotes, comments, title, content } = response?.data; //get upvotes and comments data from response
-  return { upvotes, comments, title, content }; //return upvotes and comments data to use inside component
 }
 
 export default ArticlePage;

@@ -39,6 +39,52 @@ function HomePage() {
             ></ArticleCard>
           </Col>
         </Row>
+        <Row>
+          <Col className="mt-3 mb-3">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum fuga
+            commodi architecto culpa expedita, cumque et enim suscipit incidunt
+            non sed libero sequi nesciunt, ipsam temporibus deleniti blanditiis
+            quaerat necessitatibus. Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Illum fuga commodi architecto culpa expedita,
+            cumque et enim suscipit incidunt non sed libero sequi nesciunt,
+            ipsam temporibus deleniti blanditiis quaerat necessitatibus. Lorem
+            ipsum dolor sit amet, consectetur adipisicing elit. Illum fuga
+            commodi architecto culpa expedita, cumque et enim suscipit incidunt
+            non sed libero sequi nesciunt, ipsam temporibus deleniti blanditiis
+            quaerat necessitatibus. Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Illum fuga commodi architecto culpa expedita,
+            cumque et enim suscipit incidunt non sed libero sequi nesciunt,
+            ipsam temporibus deleniti blanditiis quaerat necessitatibus. Lorem
+            ipsum dolor sit amet, consectetur adipisicing elit. Illum fuga
+            commodi architecto culpa expedita, cumque et enim suscipit incidunt
+            non sed libero sequi nesciunt, ipsam temporibus deleniti blanditiis
+            quaerat necessitatibus. Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Illum fuga commodi architecto culpa expedita,
+            cumque et enim suscipit incidunt non sed libero sequi nesciunt,
+            ipsam temporibus deleniti blanditiis quaerat necessitatibus. Lorem
+            ipsum dolor sit amet, consectetur adipisicing elit. Illum fuga
+            commodi architecto culpa expedita, cumque et enim suscipit incidunt
+            non sed libero sequi nesciunt, ipsam temporibus deleniti blanditiis
+            quaerat necessitatibus. Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Illum fuga commodi architecto culpa expedita,
+            cumque et enim suscipit incidunt non sed libero sequi nesciunt,
+            ipsam temporibus deleniti blanditiis quaerat necessitatibus. Lorem
+            ipsum dolor sit amet, consectetur adipisicing elit. Illum fuga
+            commodi architecto culpa expedita, cumque et enim suscipit incidunt
+            non sed libero sequi nesciunt, ipsam temporibus deleniti blanditiis
+            quaerat necessitatibus. Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Illum fuga commodi architecto culpa expedita,
+            cumque et enim suscipit incidunt non sed libero sequi nesciunt,
+            ipsam temporibus deleniti blanditiis quaerat necessitatibus. Lorem
+            ipsum dolor sit amet, consectetur adipisicing elit. Illum fuga
+            commodi architecto culpa expedita, cumque et enim suscipit incidunt
+            non sed libero sequi nesciunt, ipsam temporibus deleniti blanditiis
+            quaerat necessitatibus. Lorem ipsum dolor sit amet, consectetur
+            adipisicing elit. Illum fuga commodi architecto culpa expedita,
+            cumque et enim suscipit incidunt non sed libero sequi nesciunt,
+            ipsam temporibus deleniti blanditiis quaerat necessitatibus.
+          </Col>
+        </Row>
       </Container>
     </div>
   );

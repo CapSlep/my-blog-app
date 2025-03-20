@@ -7,12 +7,17 @@ import axios from "axios";
  * @param endpoint - endpoint to fetch data from
  * @returns isLoading - boolean to check if data is loading, data - fetched data from server or from cache
  */
-const useFetch = (key: string, endpoint: string) => {
+const useFetch = (
+  key: string,
+  endpoint: string,
+  enabledCondition: boolean = true
+) => {
   const { data: response, isLoading } = useQuery({
     queryKey: [key],
     queryFn: async () => {
       return await axios.get(endpoint);
     },
+    enabled: enabledCondition,
   });
 
   return { isLoading, response }; //returning properties of useUser hook to use elsewhere

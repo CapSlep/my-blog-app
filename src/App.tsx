@@ -4,7 +4,6 @@ import {
   HomePage,
   AboutPage,
   ArticlePage,
-  articleLoader,
   ArticlesPage,
   PageError,
   LogInPage,
@@ -32,7 +31,6 @@ const routes: RouteObject[] = [
       {
         path: "/articles/:name", // special path to travel across many articles
         element: <ArticlePage />,
-        loader: articleLoader, // function that will be invoked on transition
       },
       {
         path: "/login",

@@ -4,8 +4,10 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { FirestoreContext } from "./contexts";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -24,12 +26,19 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+// Initialize Cloud Firestore and get a reference to the service
+const firebaseDB = getFirestore(app);
+
+console.log(firebaseDB.toJSON());
+
 const queryClient = new QueryClient(); //create a new instance of query client
 
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <App />
+      <FirestoreContext.Provider value={firebaseDB}>
+        <App />
+      </FirestoreContext.Provider>
       <ReactQueryDevtools></ReactQueryDevtools>
     </QueryClientProvider>
   </React.StrictMode>

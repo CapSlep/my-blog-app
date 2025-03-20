@@ -1,27 +1,30 @@
 - Features
 
-* passwords and mails validation
-* populate home page
-* populate about page
-* add more articles
-* let users delete their comments
-* let users upvote comments
-* sort comments by time or by upvotes
-* sort articles by time
+* passwords and mails validation 3h
+* populate home page 1h
+* populate about page 1h
+* add more articles 1h
+* let users delete their comments 2h
+* let users upvote comments 2h
+* sort comments by time or by upvotes 2h
+* sort articles by time 1h
+* create user profile page 2h
+* create error popups 2h/4h
 
-- Admin Config
+* Admin Config
 
-* make admin configuration
-* let admin delete comments
-* let admin redact articles
+- make admin configuration 4h
+- let admin delete comments 1h
+- let admin redact articles 3h
 
-- Fixes
+* Fixes
 
-* make upvoting faster
+- make upvoting faster - kinda fixed
 
-- Complete
+* Complete
 
-* make articles download from DB to articles list
-* let user remove their upvote
-* skeleton loader
-* downloading articles data and caching it
+- make articles download from DB to articles list
+- let user remove their upvote
+- skeleton loader
+- downloading articles data and caching it
+- change user comments to show their name instead of letting them type in random name 1h / 3h

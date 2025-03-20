@@ -10,7 +10,7 @@
 
 .add__comment-label {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   flex-direction: row;
   gap: 5px;
   max-width: 320px;
@@ -23,6 +23,8 @@
 
 .input__area-text {
   resize: both;
+  min-height: 75px;
+  min-width: 125px;
   max-width: 320px;
   max-height: 125px;
 }
