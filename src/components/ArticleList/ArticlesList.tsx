@@ -1,15 +1,10 @@
 import { Container } from "react-bootstrap";
 import "./ArticlesList.scss";
 import { ArticleCard } from "../../components";
-
-interface article {
-  name: string;
-  title: string;
-  content: string[];
-}
+import { ArticleData } from "../../types";
 
 interface articleListProps {
-  articles: any[] | null;
+  articles: ArticleData[] | null;
   isLoading: boolean;
 }
 
@@ -24,7 +19,7 @@ function ArticlesList({ articles, isLoading }: articleListProps) {
         </>
       ) : (
         <>
-          {articles?.map((a: article) => {
+          {articles?.map((a: ArticleData) => {
             return (
               <ArticleCard
                 key={a.name}

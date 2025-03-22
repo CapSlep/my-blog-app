@@ -8,12 +8,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { v4 as uuidv4 } from "uuid"; // import uuid for generating unique ids
 import "./ArticlePage.scss";
+import { ArticleData } from "../../types";
+import { formatDate } from "../../utils";
 
 function ArticlePage() {
   const { name } = useParams(); //get the article name from parameters of the link in router
   const { response, isLoading } = useFetch(
-    name ? name : "",
-    "/api/articles/" + name,
+    name || "", // ensure name is a string
+    name ? `/api/articles/${name}` : "", // ensure the URL is a string
     Boolean(name)
   );
 
@@ -21,9 +23,11 @@ function ArticlePage() {
   const [upvotes, setUpvotes] = useState(response?.data.upvotes);
   const [comments, setComments] = useState(response?.data.comments);
   const [checked, setChecked] = useState(false);
+  const [articleData, setArticleData] = useState<ArticleData | null>(null);
 
   useEffect(() => {
     if (!isLoading && response) {
+      setArticleData(response.data);
       setUpvotes(response.data.upvotes);
       setComments(response.data.comments);
       setChecked(response.data.upvoteIds.includes(user?.uid));
@@ -97,7 +101,7 @@ function ArticlePage() {
         </>
       ) : (
         <>
-          <h1>{response?.data.title}</h1>
+          <h1>{articleData?.title}</h1>
           <div className="upvote__container">
             {user && (
               <ToggleButton
@@ -115,8 +119,9 @@ function ArticlePage() {
             <p className="upvote__text">
               This article has <span>{upvotes}</span> upvotes!
             </p>
+            <div>{formatDate(articleData?.creationDate || "")}</div>
           </div>
-          {response?.data.content.map((c: string) => (
+          {articleData?.content.map((c: string) => (
             <p key={c} className="mb-4">
               {c}
             </p>

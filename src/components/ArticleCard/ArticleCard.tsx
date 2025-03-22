@@ -1,9 +1,11 @@
 import React from "react";
 import { Card, Placeholder } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { ArticleData } from "../../types";
+import { formatDate } from "../../utils";
 
 interface PropType {
-  cardData?: any | null;
+  cardData?: ArticleData | null;
   isLoading?: boolean;
 }
 
@@ -28,7 +30,12 @@ function ArticleCard({ cardData = null, isLoading = true }: PropType) {
           </>
         ) : (
           <>
-            <Card.Title>{cardData?.title}</Card.Title>
+            <div className="d-flex justify-content-between align-items-center flex-wrap">
+              <Card.Title>{cardData?.title}</Card.Title>
+              <Card.Subtitle className="mb-2 text-muted">
+                {formatDate(cardData?.creationDate || "")}
+              </Card.Subtitle>
+            </div>
             <Card.Text className="mb-2">
               {cardData?.content[0].substring(0, 180).trimEnd()}
               ...
