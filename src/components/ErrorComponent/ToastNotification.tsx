@@ -13,8 +13,10 @@ function ToastNotification({ errorText, type, onClose }: ToastComponentProps) {
   const [show, setShow] = useState(true);
   const delayTime = 10000;
   const [progress, setProgress] = useState(0);
+  const [creationTime, setCreationTime] = useState(new Date().toISOString());
 
   useEffect(() => {
+    setCreationTime(new Date().toISOString());
     const interval = setInterval(() => {
       setProgress((prev) => {
         const newProgress = prev + 100 / (delayTime / 100);
@@ -43,6 +45,7 @@ function ToastNotification({ errorText, type, onClose }: ToastComponentProps) {
             ? "Error"
             : type.replace(/^./, type[0].toUpperCase())}
         </strong>
+        {new Date(creationTime).toLocaleTimeString()}
       </Toast.Header>
       <Toast.Body className="text-white">{errorText}</Toast.Body>
       <ProgressBar

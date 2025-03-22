@@ -5,6 +5,15 @@ import { useNotification } from "../../contexts/NotificationContext";
 function ToastNotificationContainer() {
   const { notifications, removeNotification } = useNotification();
 
+  const notificationsArray = notifications;
+
+  if (notificationsArray.length > 3) {
+    const firstNotification = notificationsArray.shift();
+    if (firstNotification && firstNotification.id) {
+      removeNotification(firstNotification.id);
+    }
+  }
+
   return (
     <ToastContainer
       position="top-end"

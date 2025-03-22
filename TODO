@@ -9,22 +9,22 @@
 * sort comments by time or by upvotes 2h
 * sort articles by time 1h
 * create user profile page 2h
-* create error popups 2h/4h
 
-* Admin Config
+- Admin Config
 
-- make admin configuration 4h
-- let admin delete comments 1h
-- let admin redact articles 3h
+* make admin configuration 4h
+* let admin delete comments 1h
+* let admin redact articles 3h
 
-* Fixes
+- Fixes
 
-- make upvoting faster - kinda fixed
+* make upvoting faster - kinda fixed
 
-* Complete
+- Complete
 
-- make articles download from DB to articles list
-- let user remove their upvote
-- skeleton loader
-- downloading articles data and caching it
-- change user comments to show their name instead of letting them type in random name 1h / 3h
+* make articles download from DB to articles list
+* let user remove their upvote
+* skeleton loader
+* downloading articles data and caching it
+* change user comments to show their name instead of letting them type in random name 1h / 3h
+* create error popups 2h/6h

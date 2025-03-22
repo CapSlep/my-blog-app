@@ -17,6 +17,7 @@ function LogInPage() {
   async function login() {
     try {
       await signInWithEmailAndPassword(getAuth(), email, password); // firebase function for login in
+      addNotification(ToastType.Success, "Logged in successfully!"); // show success message
       navigate("/articles"); // transfer to other page after login in
     } catch (error: any) {
       addNotification(ToastType.Error, error.message); // show error message
