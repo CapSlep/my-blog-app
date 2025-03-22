@@ -3,12 +3,13 @@ import { Form as BootstrapForm, Button } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./LogInPage.scss";
+import { useNotification, ToastType } from "../../contexts";
 
 //Page for login into the account with firebase
 function LogInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const { addNotification } = useNotification(); // useNotification hook from NotificationContext
 
   const navigate = useNavigate();
 
@@ -18,14 +19,13 @@ function LogInPage() {
       await signInWithEmailAndPassword(getAuth(), email, password); // firebase function for login in
       navigate("/articles"); // transfer to other page after login in
     } catch (error: any) {
-      setError(error); // catching error if login in went wrong
+      addNotification(ToastType.Error, error.message); // show error message
     }
   }
 
   return (
     <>
       <h1>Log In Page</h1>
-      {error && <p className="error">{error}</p>}
       <BootstrapForm
         onSubmit={(e) => {
           e.preventDefault();

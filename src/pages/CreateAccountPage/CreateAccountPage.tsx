@@ -9,6 +9,7 @@ import {
 import "./CreateAccountPage.scss";
 import { FirestoreContext } from "../../contexts";
 import * as fs from "firebase/firestore";
+import { useNotification, ToastType } from "../../contexts";
 
 // Page for creating of an account with firebase
 function CreateAccountPage() {
@@ -17,7 +18,7 @@ function CreateAccountPage() {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState(""); // error that will show what went wrong during registration
+  const { addNotification } = useNotification(); // useNotification hook from NotificationContext
 
   const navigate = useNavigate(); // function that uses useNavigate hook from react-router-dom to
 
@@ -25,7 +26,7 @@ function CreateAccountPage() {
   async function register() {
     // Checking if both passwords are the same
     if (password !== confirmPassword) {
-      setError("Passwords do not match!");
+      addNotification(ToastType.Error, "Passwords do not match!");
       return;
     }
 
@@ -35,12 +36,12 @@ function CreateAccountPage() {
       const querySnapshot = await fs.getDocs(q);
 
       if (!querySnapshot.empty) {
-        setError("Display name already exists!");
+        addNotification(ToastType.Error, "User with this name already exists!");
         return;
       }
 
-      await createUserWithEmailAndPassword(getAuth(), email, password).then(
-        async (userCredential) => {
+      await createUserWithEmailAndPassword(getAuth(), email, password)
+        .then(async (userCredential) => {
           await updateProfile(userCredential.user, {
             displayName: userName,
           });
@@ -51,25 +52,27 @@ function CreateAccountPage() {
             })
             .catch((error) => {
               console.log(error);
-              setError(error.message);
+              addNotification(ToastType.Error, error.message);
               return;
             });
-        }
-      );
+        })
+        .then(() => {
+          addNotification(ToastType.Success, "Account created successfully!");
+        });
 
       // Save the user to the Firestore database
 
       navigate("/articles"); // navigate to articles after registration
     } catch (error: any) {
       console.log(error);
-      setError(error.message); // catching error if something went wrong
+      addNotification(ToastType.Error, error.message);
     }
   }
 
   return (
     <>
       <h1>Create Account Page</h1>
-      {error && <p className="error">{error.toString()}</p>}
+      {/* {error && <p className="error">{error.toString()}</p>} */}
       <BootstrapForm
         onSubmit={(e) => {
           e.preventDefault();

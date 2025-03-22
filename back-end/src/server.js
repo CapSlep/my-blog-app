@@ -100,7 +100,6 @@ app.post("/api/articles/:name/upvote", async (req, res) => {
       { $inc: { upvotes: -1 }, $pull: { upvoteIds: uid } },
       res
     );
-    // res.status(403).send("Can't upvote this article again"); // return response with Forbidden error if user already upvoted article
   }
 });
 

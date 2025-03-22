@@ -1,6 +1,5 @@
 import AboutPage from "./AboutPage/AboutPage";
-import ArticlePage from // loader as articleLoader,
-"./ArticlePage/ArticlePage";
+import ArticlePage from "./ArticlePage/ArticlePage"; // loader as articleLoader,
 import ArticlesPage from "./ArticlesPage/ArticlesPage";
 import HomePage from "./HomePage/HomePage";
 import PageError from "./PageError/PageError";
@@ -10,7 +9,6 @@ import CreateAccountPage from "./CreateAccountPage/CreateAccountPage";
 export {
   AboutPage,
   ArticlePage,
-  // articleLoader,
   ArticlesPage,
   HomePage,
   PageError,

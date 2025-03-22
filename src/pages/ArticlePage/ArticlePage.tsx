@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { CommentsList, AddCommentForm, ErrorContainer } from "../../components";
+import { CommentsList, AddCommentForm } from "../../components";
 import { useUser, useFetch } from "../../hooks";
 import { Placeholder, Spinner, ToggleButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -69,7 +69,6 @@ function ArticlePage() {
 
   return (
     <>
-      <ErrorContainer></ErrorContainer>
       {isLoading ? (
         <>
           <Placeholder as="h1" animation="glow">

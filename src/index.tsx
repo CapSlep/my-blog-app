@@ -8,6 +8,7 @@ import { getFirestore } from "firebase/firestore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { FirestoreContext } from "./contexts";
+import { NotificationProvider } from "./contexts/NotificationContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -37,7 +38,9 @@ root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <FirestoreContext.Provider value={firebaseDB}>
-        <App />
+        <NotificationProvider>
+          <App />
+        </NotificationProvider>
       </FirestoreContext.Provider>
       <ReactQueryDevtools></ReactQueryDevtools>
     </QueryClientProvider>
