@@ -5,6 +5,7 @@ import AddCommentForm from "./AddCommentForm/AddCommentForm";
 import ArticleCard from "./ArticleCard/ArticleCard";
 import ToastNotification from "./ErrorComponent/ToastNotification";
 import ToastNotificationContainer from "./ErrorComponent/ToastNotificationContainer";
+import LikeButton from "./utils/LikeButton/LikeButton";
 
 export {
   ArticlesList,
@@ -14,4 +15,5 @@ export {
   ArticleCard,
   ToastNotification,
   ToastNotificationContainer,
+  LikeButton,
 };

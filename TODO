@@ -7,7 +7,6 @@
 * let users delete their comments 2h
 * let users upvote comments 2h
 * sort comments by time or by upvotes 2h
-* sort articles by time 1h
 * create user profile page 2h
 
 - Admin Config
@@ -27,5 +26,6 @@
 * skeleton loader
 * downloading articles data and caching it
 * change user comments to show their name instead of letting them type in random name 1h / 3h
-* create error popups 2h/6h
+* create error popups 2h / 6h
 * Added time to articles 1h
+* sort articles by time 1h

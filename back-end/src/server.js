@@ -105,8 +105,8 @@ app.post("/api/articles/:name/upvote", async (req, res) => {
 
 app.post("/api/articles/:name/comments", async (req, res) => {
   const { name } = req.params; //get the desired article from req.params
-  const { id, postedBy, text } = req.body; // get user uid from req.user wich was set inside app.use
-  const newComment = { id, postedBy, text }; //params of new created comment
+  const { id, postedBy, text, creationTime } = req.body; // get user uid from req.user wich was set inside app.use
+  const newComment = { id, postedBy, text, creationTime }; //params of new created comment
 
   const updatedArticle = await db.collection("articles").findOneAndUpdate(
     { name }, //name of article

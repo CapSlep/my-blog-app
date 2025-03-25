@@ -63,6 +63,7 @@ function ArticlePage() {
         id: uuidv4(), // generate a unique id for the comment
         postedBy: nameText,
         text: commentText,
+        creationTime: new Date().toISOString(),
       },
       { headers }
     ); // send post request for adding comments for current article with user token as headers and get response
@@ -103,22 +104,25 @@ function ArticlePage() {
         <>
           <h1>{articleData?.title}</h1>
           <div className="upvote__container">
-            {user && (
-              <ToggleButton
-                className="mb-2 upvote__button"
-                id="toggle-check"
-                type="checkbox"
-                variant="outline-success"
-                checked={checked}
-                value="1"
-                onClick={upvoteClicked}
-              >
-                <FontAwesomeIcon icon={faHeart} />
-              </ToggleButton>
-            )}
-            <p className="upvote__text">
-              This article has <span>{upvotes}</span> upvotes!
-            </p>
+            <div className="d-flex flex-row align-items-center gap-2">
+              {user && (
+                <ToggleButton
+                  className="upvote__button"
+                  id="toggle-check"
+                  type="checkbox"
+                  variant="outline-success"
+                  checked={checked}
+                  value="1"
+                  onClick={upvoteClicked}
+                >
+                  <FontAwesomeIcon icon={faHeart} />
+                </ToggleButton>
+              )}
+              <p className="upvote__text">
+                This article has{" "}
+                <strong className="text-primary">{upvotes}</strong> upvotes!
+              </p>
+            </div>
             <div>{formatDate(articleData?.creationDate || "")}</div>
           </div>
           {articleData?.content.map((c: string) => (

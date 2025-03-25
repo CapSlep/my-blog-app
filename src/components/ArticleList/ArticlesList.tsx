@@ -95,7 +95,7 @@ function ArticlesList({ articles, isLoading }: articleListProps) {
         </>
       ) : (
         <>
-          <div className="gap-2 d-flex justify-content-start">
+          <div className="gap-2 d-flex flex-wrap justify-content-start">
             <Button
               onClick={() => {
                 sortArticles(SortMethods.upvotes);
@@ -116,6 +116,13 @@ function ArticlesList({ articles, isLoading }: articleListProps) {
               }}
             >
               Sort by Time
+            </Button>
+            <Button
+              onClick={() => {
+                sortArticles(SortMethods.default);
+              }}
+            >
+              Reset
             </Button>
           </div>
           {articlesList?.map((a: ArticleData) => {
