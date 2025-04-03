@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form as BootstrapForm, Button } from "react-bootstrap";
+import { Form as BootstrapForm, Button, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "./LogInPage.scss";
@@ -25,7 +25,7 @@ function LogInPage() {
   }
 
   return (
-    <>
+    <Container fluid="md">
       <h1>Log In Page</h1>
       <BootstrapForm
         onSubmit={(e) => {
@@ -68,7 +68,7 @@ function LogInPage() {
       <Link className="create__link" to={"/create-account"}>
         Don't have an account? Create one!
       </Link>
-    </>
+    </Container>
   );
 }
 

@@ -12,7 +12,7 @@ interface PropType {
 function ArticleCard({ cardData = null, isLoading = true }: PropType) {
   return (
     <Card
-      className="w-100"
+      className="w-100 h-100 shadow-sm"
       key={cardData?.name}
       as={Link}
       to={"/articles/" + cardData?.name}

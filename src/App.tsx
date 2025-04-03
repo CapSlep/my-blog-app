@@ -10,7 +10,6 @@ import {
   CreateAccountPage,
 } from "./pages";
 import Layout from "./Layout";
-import { Container } from "react-bootstrap";
 import {
   createBrowserRouter,
   RouteObject,
@@ -48,11 +47,7 @@ const routes: RouteObject[] = [
 const router = createBrowserRouter(routes);
 
 function App() {
-  return (
-    <Container fluid className="app__container">
-      <RouterProvider router={router} />
-    </Container>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

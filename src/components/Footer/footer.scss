@@ -1,0 +1,8 @@
+.footer__container {
+  background-color: #111827;
+}
+
+.custom-hover:hover {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-light-rgb), var(--bs-text-opacity)) !important;
+}

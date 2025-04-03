@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Button } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import "./ArticlesList.scss";
 import { ArticleCard } from "../../components";
 import { ArticleData } from "../../types";
@@ -86,57 +86,61 @@ function ArticlesList({ articles, isLoading }: articleListProps) {
   }
 
   return (
-    <Container className="article__list-container">
+    <div className="article__list-container">
       {isLoading ? (
         <>
           {[...Array(3)].map((_, index) => (
-            <ArticleCard key={index}></ArticleCard>
+            <Col key={index} xs={12} md={6} lg={4}>
+              <ArticleCard></ArticleCard>
+            </Col>
           ))}
         </>
       ) : (
         <>
-          <div className="gap-2 d-flex flex-wrap justify-content-start">
-            <Button
-              onClick={() => {
-                sortArticles(SortMethods.upvotes);
-              }}
-            >
-              Sort by Upvotes
-            </Button>
-            <Button
-              onClick={() => {
-                sortArticles(SortMethods.comments);
-              }}
-            >
-              Sort by Comments
-            </Button>
-            <Button
-              onClick={() => {
-                sortArticles(SortMethods.time);
-              }}
-            >
-              Sort by Time
-            </Button>
-            <Button
-              onClick={() => {
-                sortArticles(SortMethods.default);
-              }}
-            >
-              Reset
-            </Button>
-          </div>
-          {articlesList?.map((a: ArticleData) => {
-            return (
-              <ArticleCard
-                key={a.name}
-                cardData={a}
-                isLoading={isLoading}
-              ></ArticleCard>
-            );
-          })}
+          <Row className="mb-3">
+            <Col>
+              <div className="gap-2 d-flex flex-wrap justify-content-start">
+                <Button
+                  onClick={() => {
+                    sortArticles(SortMethods.upvotes);
+                  }}
+                >
+                  Sort by Upvotes
+                </Button>
+                <Button
+                  onClick={() => {
+                    sortArticles(SortMethods.comments);
+                  }}
+                >
+                  Sort by Comments
+                </Button>
+                <Button
+                  onClick={() => {
+                    sortArticles(SortMethods.time);
+                  }}
+                >
+                  Sort by Time
+                </Button>
+                <Button
+                  onClick={() => {
+                    sortArticles(SortMethods.default);
+                  }}
+                >
+                  Reset
+                </Button>
+              </div>
+            </Col>
+          </Row>
+          <Row className="g-4">
+            {articlesList?.map((a: ArticleData) => (
+              <Col key={a.name} xs={12} md={6} lg={4}>
+                <ArticleCard cardData={a} isLoading={isLoading}></ArticleCard>
+              </Col>
+            ))}
+          </Row>
         </>
       )}
-    </Container>
+    </div>
   );
 }
 

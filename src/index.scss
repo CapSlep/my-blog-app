@@ -1,3 +1,13 @@
+$h1-font-size: 4rem;
+$primary: rgb(79 70 229);
+
+.gradient-text {
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
 @import "~bootstrap/scss/bootstrap";
 
 body {

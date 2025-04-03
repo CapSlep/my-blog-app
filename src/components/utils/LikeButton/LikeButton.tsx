@@ -1,10 +1,13 @@
 import { ToggleButton } from "react-bootstrap";
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 
-function LikeButton() {
-  const [checked, setChecked] = useState(false);
+interface LikeButtonProps {
+  checked: boolean;
+  clickHandler: () => void;
+}
+
+function LikeButton({ checked, clickHandler }: LikeButtonProps) {
   return (
     <ToggleButton
       className="upvote__button"
@@ -16,10 +19,9 @@ function LikeButton() {
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        setChecked(!checked);
+        clickHandler();
       }}
     >
-      {"0 "}
       <FontAwesomeIcon icon={faHeart} />
     </ToggleButton>
   );

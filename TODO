@@ -5,15 +5,14 @@
 * populate about page 1h
 * add more articles 1h
 * let users delete their comments 2h
-* let users upvote comments 2h
-* sort comments by time or by upvotes 2h
-* create user profile page 2h
+* create user profile page 2h ?
+* sort comments by time 2h +-
 
-- Admin Config
+- Admin Config ?
 
-* make admin configuration 4h
-* let admin delete comments 1h
-* let admin redact articles 3h
+* make admin configuration 4h ?
+* let admin delete comments 1h ?
+* let admin redact articles 3h ?
 
 - Fixes
 
@@ -29,3 +28,7 @@
 * create error popups 2h / 6h
 * Added time to articles 1h
 * sort articles by time 1h
+
+- Refused
+
+* let users upvote comments 2h - Too many time needed for implementation on front and back end

@@ -2,6 +2,11 @@ import express from "express";
 import { MongoClient, ServerApiVersion } from "mongodb";
 import admin from "firebase-admin";
 import fs from "fs";
+import path from "path";
+
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //firebase admin configuration reading
 const credentials = JSON.parse(fs.readFileSync("./credentials.json"));
@@ -20,7 +25,9 @@ let db; // data base
 
 //connection to mongo data base
 async function connectToDB() {
-  const uri = "mongodb://127.0.0.1:27017"; // local uri for mongo data base
+  const uri = !process.env.MONGODB_USERNAME
+    ? "mongodb://127.0.0.1:27017"
+    : `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@blog-app.ztyig.mongodb.net/?retryWrites=true&w=majority&appName=Blog-app`; // local uri for mongo data base
 
   //creation of mongo client
   const client = new MongoClient(uri, {
@@ -35,6 +42,12 @@ async function connectToDB() {
 
   db = client.db("my-blog-db"); // inserting the data base with specific name to work across the server
 }
+
+app.use(express.static(path.join(__dirname, "../build")));
+
+app.use(/^(?!\/api).+/, (req, res) => {
+  res.sendFile(path.join(__dirname, "../build/index.html"));
+});
 
 //getting the article with specific name
 app.get("/api/articles/:name", async (req, res) => {
@@ -119,12 +132,14 @@ app.post("/api/articles/:name/comments", async (req, res) => {
   res.json(updatedArticle);
 });
 
+const PORT = process.env.PORT || 8000;
+
 //initialize the server
 async function start() {
   await connectToDB(); //connection to data base
   //starting the server with callback
-  app.listen(3001, function () {
-    console.log("Server listening on port 3001");
+  app.listen(PORT, function () {
+    console.log("Server listening on port " + PORT);
   });
 }
 

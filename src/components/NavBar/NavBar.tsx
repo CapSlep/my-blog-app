@@ -13,11 +13,12 @@ function NavBar() {
     <Navbar
       sticky="top"
       expand="md"
-      className="rounded-bottom"
-      bg="secondary-subtle"
-      data-bs-theme="secondary-subtle"
+      // className="rounded-bottom"
+      bg="light"
+      data-bs-theme="light"
+      className="shadow-sm"
     >
-      <Container fluid className="navbar__container">
+      <Container fluid="md" className="navbar__container">
         <Navbar.Brand as={Link} to={"/"}>
           My Blog
         </Navbar.Brand>
@@ -45,7 +46,12 @@ function NavBar() {
             </Spinner>
           ) : (
             <>
-              {user && <Navbar.Text>Signed in as: {user.email}</Navbar.Text>}
+              {user && (
+                <Navbar.Text>
+                  Welcome,{" "}
+                  <span className="gradient-text">{user.displayName}</span>
+                </Navbar.Text>
+              )}
               {user ? (
                 <Button
                   className="ms-2"

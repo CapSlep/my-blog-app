@@ -1,4 +1,4 @@
-import { ToastNotificationContainer } from "./components";
+import { ToastNotificationContainer, Footer } from "./components";
 import NavBar from "./components/NavBar/NavBar";
 import { Outlet } from "react-router-dom";
 
@@ -8,10 +8,11 @@ function Layout() {
     <>
       <NavBar />
       <ToastNotificationContainer></ToastNotificationContainer>
-      <div className="content__container">
+      <main className="content__container">
         {/* Outlet is the Component that will show pages from router */}
         <Outlet></Outlet>
-      </div>
+      </main>
+      <Footer></Footer>
     </>
   );
 }

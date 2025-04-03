@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { CommentsList, AddCommentForm } from "../../components";
+import { CommentsList, AddCommentForm, LikeButton } from "../../components";
 import { useUser, useFetch } from "../../hooks";
-import { Placeholder, Spinner, ToggleButton } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { Container, Placeholder, Spinner } from "react-bootstrap";
 import { v4 as uuidv4 } from "uuid"; // import uuid for generating unique ids
 import "./ArticlePage.scss";
 import { ArticleData } from "../../types";
@@ -73,7 +71,7 @@ function ArticlePage() {
   }
 
   return (
-    <>
+    <Container fluid="md">
       {isLoading ? (
         <>
           <Placeholder as="h1" animation="glow">
@@ -106,17 +104,10 @@ function ArticlePage() {
           <div className="upvote__container">
             <div className="d-flex flex-row align-items-center gap-2">
               {user && (
-                <ToggleButton
-                  className="upvote__button"
-                  id="toggle-check"
-                  type="checkbox"
-                  variant="outline-success"
+                <LikeButton
                   checked={checked}
-                  value="1"
-                  onClick={upvoteClicked}
-                >
-                  <FontAwesomeIcon icon={faHeart} />
-                </ToggleButton>
+                  clickHandler={upvoteClicked}
+                ></LikeButton>
               )}
               <p className="upvote__text">
                 This article has{" "}
@@ -139,7 +130,7 @@ function ArticlePage() {
           <CommentsList comments={comments}></CommentsList>
         </>
       )}
-    </>
+    </Container>
   );
 }
 

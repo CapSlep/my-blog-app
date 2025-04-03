@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { Form as BootstrapForm, Button } from "react-bootstrap";
+import { Form as BootstrapForm, Button, Container } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import {
   getAuth,
@@ -70,7 +70,7 @@ function CreateAccountPage() {
   }
 
   return (
-    <>
+    <Container fluid="md">
       <h1>Create Account Page</h1>
       {/* {error && <p className="error">{error.toString()}</p>} */}
       <BootstrapForm
@@ -141,7 +141,7 @@ function CreateAccountPage() {
       <div className="create__link">
         <Link to={"/login"}>Already have an account? Log In!</Link>
       </div>
-    </>
+    </Container>
   );
 }
 

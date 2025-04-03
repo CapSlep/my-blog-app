@@ -1,15 +1,13 @@
 import "./CommentsList.scss";
-import { Button, ToggleButton } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { formatDate } from "../../utils";
-import { useUser } from "../../hooks";
-import { useState } from "react";
-import { LikeButton } from "../";
+import { useEffect, useState } from "react";
 
 interface commentType {
   id: string; // add id property
   postedBy: string;
   text: string;
-  creationTime: string | undefined;
+  creationTime: string;
 }
 
 interface props {
@@ -17,7 +15,20 @@ interface props {
 }
 
 function CommentsList({ comments }: props) {
-  const { user } = useUser(); //getting user from useUser hook
+  const [commentsList, setCommentsList] = useState<commentType[] | undefined>(
+    undefined
+  );
+
+  useEffect(() => {
+    setCommentsList(
+      comments?.slice().sort((a, b) => {
+        return (
+          new Date(b.creationTime).getTime() -
+          new Date(a.creationTime).getTime()
+        );
+      })
+    );
+  }, [comments]);
 
   return (
     <div className="comments__container">
@@ -25,37 +36,20 @@ function CommentsList({ comments }: props) {
       <div className="gap-2 d-flex flex-wrap justify-content-start">
         <Button
           onClick={() => {
-            // sortArticles(SortMethods.upvotes);
-          }}
-        >
-          Sort by Upvotes
-        </Button>
-        <Button
-          onClick={() => {
-            // sortArticles(SortMethods.time);
-          }}
-        >
-          Sort by Time
-        </Button>
-        <Button
-          onClick={() => {
-            // sortArticles(SortMethods.default);
+            setCommentsList(commentsList?.slice().reverse());
           }}
         >
           Reset
         </Button>
       </div>
-      {comments?.map((c: commentType) => (
+      {commentsList?.map((c: commentType) => (
         <div className="alert alert-dark" key={c.id}>
           <div className="d-flex justify-content-between align-items-center flex-wrap">
             <h6>{c.postedBy}</h6>{" "}
             <span>{formatDate(c?.creationTime || "")}</span>
           </div>
 
-          <div className="d-flex justify-content-between align-items-center flex-wrap">
-            <p>{c.text}</p>
-            <div>{user && <LikeButton></LikeButton>}</div>
-          </div>
+          <p>{c.text}</p>
         </div>
       ))}
     </div>
